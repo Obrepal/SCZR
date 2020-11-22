@@ -1,7 +1,7 @@
 FROM ubuntu:16.04
 
 RUN apt-get update && \
-    apt-get install -y wget build-essential cmake
+    apt-get install -y wget build-essential cmake git
 
 WORKDIR /tmp/sczr
 
@@ -27,6 +27,16 @@ RUN cd libexosip2-5.2.0 && \
     ./configure && \
     make && make install
 
+# Download and install libsoundio (Sound input/output library)
+RUN git clone https://github.com/andrewrk/libsoundio.git
+RUN cd libsoundio && \
+    mkdir build && cd build && \
+    cmake .. && \
+    make && make install
+
 # Everything needed is now in /usr/local/lib, so /tmp/sczr can be safely deleted
 WORKDIR /root
 RUN rm -r /tmp/sczr
+
+COPY ./src /root/src
+COPY ./examples /root/examples

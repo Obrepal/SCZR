@@ -3,6 +3,11 @@ project: sczr
 tags: sczr
 
 tasks:
+  build-shell:
+    cmd : |
+      docker build -t ${CONTAINER_NAME} .
   run-shell:
     cmd: |
-      docker run -it ${CONTAINER_NAME} bash
+      docker run -it \
+      --network host \
+      ${CONTAINER_NAME} bash
