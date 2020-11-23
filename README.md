@@ -1,6 +1,7 @@
 # SCZR
 ## Prerequisites
 - [Install Docker](https://docs.docker.com/engine/install/ubuntu/)
-- [Install myke](https://github.com/omio-labs/myke)
-## How to run shell
-In the main directory type `myke run-shell`
+- [Install myke](https://github.com/omio-labs/myke/releases/tag/v1.0.2)
+## How to setup environment
+- In the main directory type `myke build-shell`
+- Then you can run the container with `myke run-shell`
