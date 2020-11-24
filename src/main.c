@@ -1,10 +1,12 @@
-#include <eXosip2/eXosip.h>
-#include <osip2/osip_mt.h>
-#include <soundio/soundio.h>
-#include <stdio.h>
-#include <stdlib.h>
+#include "main.h"
 
-int main()
-{
+void testFunc(void){
+  printf("It seems that I work\n");
+}
+
+int main(){
+
+  testFunc();
   return 0;
+
 }

@@ -10,4 +10,4 @@ tasks:
     cmd: |
       docker run -it \
       --network host \
-      ${CONTAINER_NAME} bash
+      ${CONTAINER_NAME} bash 
