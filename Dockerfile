@@ -41,6 +41,13 @@ RUN apt-get update && \
     gstreamer1.0-tools gstreamer1.0-x gstreamer1.0-alsa gstreamer1.0-gl gstreamer1.0-gtk3 \
     gstreamer1.0-qt5 gstreamer1.0-pulseaudio
 
+# enable real time scheduling
+RUN echo 'kernel.sched_rt_runtime_us=-1' > /etc/sysctl.conf
+
+RUN echo '@realtime   -  rtprio     99\n@realtime   -  memlock    unlimited' \
+    > /etc/security/limits.d/99-realtime.conf
+RUN groupadd realtime
+RUN usermod -a -G realtime root
 
 # Everything needed is now in /usr/local/lib, so /tmp/sczr can be safely deleted
 WORKDIR /root
@@ -50,3 +57,5 @@ COPY ./src /root/src
 COPY ./examples /root/examples
 
 RUN cd src && gcc main.c -o main `pkg-config --cflags --libs gstreamer-1.0`
+
+CMD apt-get update && apt-get install jackd2
