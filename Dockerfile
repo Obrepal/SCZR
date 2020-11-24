@@ -49,4 +49,4 @@ RUN rm -rf /tmp/sczr
 COPY ./src /root/src
 COPY ./examples /root/examples
 
-RUN cd src && make
+RUN cd src && gcc main.c -o main `pkg-config --cflags --libs gstreamer-1.0`

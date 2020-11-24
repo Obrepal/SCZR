@@ -9,5 +9,6 @@ tasks:
   run-shell:
     cmd: |
       docker run -it \
+      -e DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix \
       --network host \
-      ${CONTAINER_NAME} bash 
+      ${CONTAINER_NAME} bash
