@@ -3,13 +3,12 @@ project: sczr
 tags: sczr
 
 tasks:
-  build-shell:
+  build:
     cmd : |
-      docker build -t ${CONTAINER_NAME} .
-  run-shell:
+      gcc src/${SRC_FILE_NAME} -o ${BIN_FILE_NAME} `pkg-config --cflags --libs gstreamer-1.0`
+  run:
     cmd: |
-      docker run -it \
-      --cap-add SYS_NICE \
-      -e DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix \
-      --network host \
-      ${CONTAINER_NAME} bash
+      ./${BIN_FILE_NAME}
+  clean:
+    cmd: |
+      rm -f ${BIN_FILE_NAME}

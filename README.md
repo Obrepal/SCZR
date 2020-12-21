@@ -2,7 +2,7 @@
 ## Libraries
 Install gstreamer libraries
 
-``` 
+```
 sudo apt-get update
 ```
 
@@ -13,5 +13,8 @@ gstreamer1.0-tools gstreamer1.0-x gstreamer1.0-alsa gstreamer1.0-gl gstreamer1.0
 gstreamer1.0-qt5 gstreamer1.0-pulseaudio
 ```
 ## How to build
-In the directory with the main file type
-``gcc main.c -o main `pkg-config --cflags --libs gstreamer-1.0` ``
+In the main directory of the repo type
+`myke build`
+## How to run
+In the main directory of the repo type
+`myke run`
