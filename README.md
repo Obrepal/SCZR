@@ -15,6 +15,7 @@ gstreamer1.0-qt5 gstreamer1.0-pulseaudio
 ## How to build
 In the main directory of the repo type
 `myke build`
+
 ## How to run
 In the main directory of the repo type
 `myke run`
