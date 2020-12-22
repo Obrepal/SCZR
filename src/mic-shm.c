@@ -29,14 +29,13 @@ int main(int argc, char *argv[]) {
   data.queue = gst_element_factory_make ("queue", "queue");
   data.convert = gst_element_factory_make ("audioconvert", "convert");
   data.resample = gst_element_factory_make ("audioresample", "resample");
-  data.encoder = gst_element_factory_make ("alawenc", "encoder");
   data.sink = gst_element_factory_make ("shmsink", "sink");
 
   /* Create the empty pipeline */
   data.pipeline = gst_pipeline_new ("mic-shm-pipeline");
 
   if (!data.pipeline || !data.source || !data.queue ||
-      !data.convert || !data.resample || !data.encoder || !data.sink) {
+      !data.convert || !data.resample || !data.sink) {
     g_printerr ("Not all elements could be created.\n");
     return -1;
   }
@@ -44,9 +43,9 @@ int main(int argc, char *argv[]) {
   /* Build the pipeline. Note that we are NOT linking the source at this
    * point. We will do it later. */
   gst_bin_add_many (GST_BIN (data.pipeline), data.source, data.queue,
-                    data.convert, data.resample, data.encoder, data.sink, NULL);
+                    data.convert, data.resample, data.sink, NULL);
   if (!gst_element_link_many (data.source, data.queue, data.convert, data.resample,
-                              data.encoder, data.sink, NULL)) {
+                              data.sink, NULL)) {
     g_printerr ("Elements could not be linked.\n");
     gst_object_unref (data.pipeline);
     return -1;
