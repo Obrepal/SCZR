@@ -5,10 +5,11 @@ tags: sczr
 tasks:
   build:
     cmd : |
-      gcc src/${SRC_FILE_NAME} -o ${BIN_FILE_NAME} `pkg-config --cflags --libs gstreamer-1.0`
-  run:
+      gcc src/${SRC_A} -o ${BIN_A} `pkg-config --cflags --libs gstreamer-1.0` && \
+      gcc src/${SRC_B} -o ${BIN_B} `pkg-config --cflags --libs gstreamer-1.0`
+  run-a:
     cmd: |
-      ./${BIN_FILE_NAME}
-  clean:
+      ./${BIN_A}
+  run-b:
     cmd: |
-      rm -f ${BIN_FILE_NAME}
+      ./${BIN_B}
