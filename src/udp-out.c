@@ -5,9 +5,10 @@ typedef struct _CustomData {
   GstElement *pipeline;
   GstElement *source;
   GstElement *queue;
+  GstElement *pcma;
+  GstElement *decoder;
   GstElement *convert;
   GstElement *resample;
-  GstElement *decoder;
   GstElement *sink;
 } CustomData;
 
@@ -25,9 +26,10 @@ int main(int argc, char *argv[]) {
   gst_init (&argc, &argv);
 
   /* Create the elements */
-  data.source = gst_element_factory_make ("alsasrc", "source");
-  data.decoder = gst_element_factory_make ("alawdec", "decoder");
+  data.source = gst_element_factory_make ("udpsrc", "source");
   data.queue = gst_element_factory_make ("queue", "queue");
+  data.pcma = gst_element_factory_make ("rtppcmadepay", "pcma");
+  data.decoder = gst_element_factory_make ("alawdec", "decoder");
   data.convert = gst_element_factory_make ("audioconvert", "convert");
   data.resample = gst_element_factory_make ("audioresample", "resample");
   data.sink = gst_element_factory_make ("autoaudiosink", "sink");
@@ -35,7 +37,7 @@ int main(int argc, char *argv[]) {
   /* Create the empty pipeline */
   data.pipeline = gst_pipeline_new ("udp-out-pipeline");
 
-  if (!data.pipeline || !data.source || !data.queue ||
+  if (!data.pipeline || !data.source || !data.queue || !data.pcma ||
       !data.convert || !data.resample || !data.decoder || !data.sink) {
     g_printerr ("Not all elements could be created.\n");
     return -1;
@@ -43,15 +45,16 @@ int main(int argc, char *argv[]) {
 
   /* Build the pipeline. Note that we are NOT linking the source at this
    * point. We will do it later. */
-  gst_bin_add_many (GST_BIN (data.pipeline), data.source, data.decoder, data.queue, data.sink, NULL);
-  if (!gst_element_link_many (data.source, data.decoder, data.queue, data.sink, NULL)) {
+  gst_bin_add_many (GST_BIN (data.pipeline), data.source, data.queue, data.pcma, data.decoder, data.convert, data.resample, data.sink, NULL);
+  if (!gst_element_link_many (data.source, data.queue, data.pcma, data.decoder, data.convert, data.resample, data.sink, NULL)) {
     g_printerr ("Elements could not be linked.\n");
     gst_object_unref (data.pipeline);
     return -1;
   }
 
   /* Set the IP address to recieve */
-  g_object_set (data.source, "host", "192.168.0.51", "port", 5004, NULL);
+  GstCaps caps = 
+  g_object_set (data.source, "caps", caps, "buffer-size", 2000000, "port", 5004, NULL);
 
   /* Connect to the pad-added signal */
   g_signal_connect (data.source, "pad-added", G_CALLBACK (pad_added_handler), &data);
