@@ -6,10 +6,14 @@ tasks:
   build:
     cmd : |
       gcc src/${SRC_A} -o ${BIN_A} `pkg-config --cflags --libs gstreamer-1.0` && \
-      gcc src/${SRC_B} -o ${BIN_B} `pkg-config --cflags --libs gstreamer-1.0`
+      gcc src/${SRC_B} -o ${BIN_B} `pkg-config --cflags --libs gstreamer-1.0` && \
+      gcc src/${SRC_C} -o ${BIN_C} `pkg-config --cflags --libs gstreamer-1.0`
   run-a:
     cmd: |
       ./${BIN_A}
   run-b:
     cmd: |
       ./${BIN_B}
+  run-c:
+    cmd: |
+      ./${BIN_C}
