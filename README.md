@@ -12,10 +12,14 @@ gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly gstreamer1.0-libav gstreamer1
 gstreamer1.0-tools gstreamer1.0-x gstreamer1.0-alsa gstreamer1.0-gl gstreamer1.0-gtk3 \
 gstreamer1.0-qt5 gstreamer1.0-pulseaudio
 ```
+Install myke
+
+https://github.com/omio-labs/myke/releases/tag/v1.0.2
+
 ## How to build
 In the main directory of the repo type
 `myke build`
 
 ## How to run
 In the main directory of the repo type
-`myke run`
+`myke run-a` for process A, and in a second terminal `myke run-b` for process B
